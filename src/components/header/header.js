@@ -1,7 +1,11 @@
 import React from 'react';
-import logo from '../../img/logo.svg';
+import { NavLink } from 'react-router-dom';
+import logo from '../../logo.svg';
 import './header.css';
+
+
 const Header = (props) => {
+ 
 return <header className="header">
         <img
             src={logo}
@@ -10,27 +14,23 @@ return <header className="header">
           />
         <nav className="main-nav nav">
           <ul className="list">
-            <li className="item">
-              <a href="/" className="item-link">Falcon 1</a>
-            </li>
-            <li className="item">
-              <a href="/" className="item-link">Falcon 9</a>
-            </li>
-            <li className="item">
-              <a href="/" className="item-link">Falcon Heavy</a>
-            </li>
-            <li className="item">
-              <a href="/" className="item-link">Updates</a>
-            </li>
+            {props.rockets.map((item, index)=>(
+              <li key={index} className="item">
+                <NavLink to={'/'+ props.rocket} onClick={ () => {
+                              props.changeRocket(item);
+                            }} 
+                            className="item-link" activeClassName='item-link-active'>{item}</NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
         <nav className="secondary-nav">
           <ul className="list">
             <li className="item">
-              <a href="/" className="item-link">Home</a>
+              <NavLink to='/home' className="item-link">Home</NavLink>
             </li>
             <li className="item">
-              <a href="calendar.html" className="item-link">Calendar</a>
+              <NavLink to='/calendar' className="item-link">Calendar</NavLink>
             </li>
           </ul>
         </nav>
