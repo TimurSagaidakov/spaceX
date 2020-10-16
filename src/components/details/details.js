@@ -1,7 +1,9 @@
 import React from 'react';
+import Main from '../main/main';
 import './details.css';
 const Details = (props) => {
 return <main class="details">
+  <Main rocket={props.name}/>
 <div class="container">
   <div class="details-row">
     <div class="details-image">

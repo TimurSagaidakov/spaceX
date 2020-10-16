@@ -1,10 +1,11 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route,BrowserRouter } from 'react-router-dom';
 import Calendar from './components/calendar/calendar';
 import Details from './components/details/details';
 import Features from './components/features/features';
 import Footer from './components/footer/footer';
 import Header from './components/header/header';
+import Home from './components/Home/Home';
 import Main from './components/main/main';
 import './index.css';
 import FetchData from './service/fetchData';
@@ -14,13 +15,12 @@ class App extends React.Component {
   state={
     rocket: 'Falcon 1',
     rocketFeatures: null,
-    rockets: [
-      //{name:null,height:null,diametr: null,mass: null}
-
-    ],
+    rockets: [],
+    company: null,
   };
   componentDidMount(){
     this.updateRocket();
+    this.updateCompany();
   }
   updateRocket(){
     this.fetchData.getRocket()
@@ -40,17 +40,31 @@ class App extends React.Component {
     },
     this.updateRocket);
   }
+  updateCompany = ()=>{
+    this.fetchData.getCompany().then(company=>{
+      this.setState({company}) 
+    })
+  }
   render(){
-    
-  return <>
-    <Header changeRocket={this.changeRocket} rockets={this.state.rockets}/>
-    <Route path="/" render={ () =><Main rocket={this.state.rocket} />}/>
-    <Route path="/calendar" render={ () =><Calendar />}/>
-    {this.state.rocketFeatures !==null?
-    <Features rocketFeatures={this.state.rocketFeatures} rocket={this.state.rocket}/>
-    :''}
-    <Footer/>
-  </>
+  return  <BrowserRouter>
+            <Header changeRocket={this.changeRocket} rockets={this.state.rockets}/>
+            {this.state.company && <Route exact path="/" render={ () => <Home company={this.state.company}/>}/>}
+            <Route path="/rocket" >
+              {this.state.rocketFeatures !==null
+                ? <Features {...this.state.rocketFeatures}  rocket={this.state.rocket}/>
+                :''}
+            </Route>
+            <Route path="/calendar" render={ () => 
+              <>
+                <Calendar />  
+              </>}
+            />
+            <Route path='/details' >
+              <Details/>
+            </Route>
+            
+            {this.state.company && <Footer {...this.state.company.links}/>}
+          </BrowserRouter>
   }
 }
 
