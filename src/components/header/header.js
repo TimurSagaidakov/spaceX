@@ -18,7 +18,7 @@ return <header className="header">
           <ul className="list">
             {props.rockets.map((item, index)=>(
               <li key={index} className="item">
-                <NavLink to='/rocket' onClick={ () => {
+                <NavLink to={`/rocket/${item}`} onClick={ () => {
                               props.changeRocket(item);
                             }} 
                             className="item-link" activeClassName='active'>{item}</NavLink>

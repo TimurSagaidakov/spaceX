@@ -1,23 +1,43 @@
-import React from 'react';
-import Main from '../main/main';
+import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import YouTube from 'react-youtube';
+import FetchData from '../../service/fetchData';
+import Loader from '../loader/loader';
 import './details.css';
+
+
+const fetchData = new FetchData()
 const Details = (props) => {
-return <main class="details">
-  <Main rocket={props.name}/>
-<div class="container">
-  <div class="details-row">
-    <div class="details-image">
-      <img src="https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png" alt=""/>
+  
+  const [data, setData] = useState(0);
+
+    useEffect(()=>{
+      fetchData.getOneLaunches(props.match.params.id).then(data=>setData(data))
+    },[])
+   
+    if(data===0){
+      return <Loader/>
+    }
+return <>
+<main className="details">
+          <h1 className="title">
+            {data.name}
+          </h1>
+<div className="container">
+  <div className="details-row">
+    <div className="details-image">
+      <img src={data.links.patch.small} alt=""/>
     </div>
-    <div class="details-content">
-      <p class="details-description">Engine failure at 33 seconds and loss of vehicle</p>
+    <div className="details-content">
+      <p className="details-description">{data.details}</p>
     </div>
   </div>
-  <div>
-    <iframe class="details-youtube" width="560" height="315" src="https://www.youtube.com/embed/dLQ2tZEH6G0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen/>
-  </div>
+    <YouTube className='details-youtube' videoId={data.links.youtube_id} />
 </div>
-<a href="calendar.html" class="button button-back">go back</a>
+<button className="button button-back" onClick={()=>{
+  props.history.goBack()
+}}>go back</button>
 </main>
+</>
 }
-export default Details;
+export default withRouter(Details) ;

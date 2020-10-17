@@ -6,7 +6,6 @@ import Features from './components/features/features';
 import Footer from './components/footer/footer';
 import Header from './components/header/header';
 import Home from './components/Home/Home';
-import Main from './components/main/main';
 import './index.css';
 import FetchData from './service/fetchData';
 class App extends React.Component {
@@ -49,7 +48,7 @@ class App extends React.Component {
   return  <BrowserRouter>
             <Header changeRocket={this.changeRocket} rockets={this.state.rockets}/>
             {this.state.company && <Route exact path="/" render={ () => <Home company={this.state.company}/>}/>}
-            <Route path="/rocket" >
+            <Route path="/rocket/:id" >
               {this.state.rocketFeatures !==null
                 ? <Features {...this.state.rocketFeatures}  rocket={this.state.rocket}/>
                 :''}
@@ -59,7 +58,7 @@ class App extends React.Component {
                 <Calendar />  
               </>}
             />
-            <Route path='/details' >
+            <Route path='/details/:id' >
               <Details/>
             </Route>
             

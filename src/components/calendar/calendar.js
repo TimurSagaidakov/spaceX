@@ -11,7 +11,6 @@ const Calendar = (props) => {
   useEffect(()=>{
     fetchData.getLaunches().then(data=>setData(data))
   },[])
-  console.log(data);
 return <>
 <Main/>
 <section className="calendar">
@@ -25,7 +24,7 @@ return <>
             </div>
             <div className="launches-content">
               <h2 className="launches-title">{d.name}</h2>
-              <NavLink to='/details' className="button launches-details">Подробнее</NavLink>
+              <NavLink to={'/details/' + d.id} className="button launches-details">Подробнее</NavLink>
             </div>
           </article>
         </li>

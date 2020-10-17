@@ -13,5 +13,7 @@ export default class FetchData {
 
   getLaunches = async () => await this.getData(this.baseUrl + 'launches/past')
 
+  getOneLaunches = async (id) => await this.getData(this.baseUrl + 'launches/' + id)
+
   getCompany = async () => await this.getData(this.baseUrl + 'company')
 }

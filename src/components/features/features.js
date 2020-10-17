@@ -1,5 +1,6 @@
 import React from 'react';
 import RelaxWrapper from 'react-rellax-wrapper'
+import { withRouter } from 'react-router-dom';
 import Main from '../main/main';
 import './features.css';
 const img = {
@@ -9,7 +10,7 @@ const img = {
   'other': 'starship',
 }
 const Features = (props) => {
-  const {name, height,diameter,mass, payload_weights,description} = props
+  const {name, height,diameter,mass, payload_weights,description,history} = props
 return <>
 <Main rocket={props.rocket}/>
 <section className="features">
@@ -49,7 +50,7 @@ return <>
   </table>
   <RelaxWrapper speed={14}>
   <img
-      src={`./img/${img.hasOwnProperty(name)
+      src={`../../img/${img.hasOwnProperty(name)
       ? img[name]
       : img.other}.png`}      
       alt="rocket"
@@ -67,4 +68,4 @@ return <>
 
 </>
 }
-export default Features;
+export default withRouter(Features);

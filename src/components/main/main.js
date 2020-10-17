@@ -11,17 +11,18 @@ return <section className="main">
           <h1 className="title">
             {props.rocket? props.rocket : 'Календарь SpaceX'}
           </h1>
-          <div className="video-container">
             {props.rocket
-              ? <video 
+          
+              ? <div className="video-container"> <video 
                   className="video" 
                   autoPlay loop muted 
-                  src={`./video/${video.hasOwnProperty(props.rocket) 
+                  src={`../../video/${video.hasOwnProperty(props.rocket) 
                   ? video[props.rocket]
                   : video.other}.mp4`}/>
-              : ''
-            }
+              
           </div>
+          : '' 
+        }
         </section>
 }
 export default Main;
